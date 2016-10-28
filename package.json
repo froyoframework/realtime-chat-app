@@ -1,0 +1,29 @@
+{
+  "name": "realtime-chat-app",
+  "version": "1.0.0",
+  "description": "An example of realtime chat app by using Express and socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/froyoframework/realtime-chat-app.git"
+  },
+  "keywords": [
+    "chat",
+    "socketio"
+  ],
+  "author": "Asep Bagja Priandana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/froyoframework/realtime-chat-app/issues"
+  },
+  "homepage": "https://github.com/froyoframework/realtime-chat-app#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "socket.io": "^1.5.1"
+  }
+}
