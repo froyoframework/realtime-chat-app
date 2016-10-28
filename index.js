@@ -21,13 +21,16 @@ let listener = http.listen(3000, () => {
 });
 
 io.on('connection', (socket) => {
-    socket.broadcast.emit('reply-message', 'someone is connected');
+    // join the room
+    socket.join('someroom');
+    
+    socket.in('someroom').broadcast.emit('reply-message', 'someone is connected');
 
     socket.on('request-message', (data) => {
-        io.emit('reply-message', data);
+        io.to('someroom').emit('reply-message', data);
     });
 
     socket.on('disconnect', () => {
-        socket.broadcast.emit('reply-message', 'someone is disconnected');
+        socket.in('someroom').broadcast.emit('reply-message', 'someone is disconnected');
     });
 });
