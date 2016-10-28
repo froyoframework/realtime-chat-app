@@ -21,7 +21,13 @@ let listener = http.listen(3000, () => {
 });
 
 io.on('connection', (socket) => {
+    socket.broadcast.emit('reply-message', 'someone is connected');
+
     socket.on('request-message', (data) => {
-        socket.emit('reply-message', data);
+        io.emit('reply-message', data);
+    });
+
+    socket.on('disconnect', () => {
+        socket.broadcast.emit('reply-message', 'someone is disconnected');
     });
 });
