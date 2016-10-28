@@ -3,14 +3,14 @@
 $(document).ready(() => { 
     $("#status").empty();
 
-    let socket = io('http://localhost:3000');
+    let socket = io();
     
     // sending message
     $('#chat-bar').submit((e) => {
         e.preventDefault();
-
+        
         let message = $("#type-message").val();
-
+        
         socket.emit('request-message', message);
     });
 

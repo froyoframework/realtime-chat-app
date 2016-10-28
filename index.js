@@ -22,6 +22,6 @@ let listener = http.listen(3000, () => {
 
 io.on('connection', (socket) => {
     socket.on('request-message', (data) => {
-        socket.emit('reply-message', data);
+        io.emit('reply-message', data);
     });
 });
