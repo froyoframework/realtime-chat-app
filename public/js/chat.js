@@ -9,9 +9,13 @@ $(document).ready(() => {
     $('#chat-bar').submit((e) => {
         e.preventDefault();
 
-        let message = $("#type-message").val();
+        let messageData = {
+            username: $("#username").val(),
+            room: $("#room").val(),
+            message: $("#type-message").val() 
+        };
 
-        socket.emit('request-message', message);
+        socket.emit('request-message', messageData);
     });
 
     // listening message

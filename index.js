@@ -4,6 +4,9 @@ const exphbs = require('express-handlebars');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const roomModel = require('./models/room');
 
 // setup template engine
 app.engine('.hbs', exphbs({defaultLayout: 'single', extname: '.hbs'}));
@@ -12,8 +15,38 @@ app.set('view engine', '.hbs');
 // serving static files
 app.use(express.static('public'));
 
+// parse post body
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+// setup cookie parser
+app.use(cookieParser());
+
+// APPLICATION ROUTES
 app.get('/', (req, res) => {
-    res.render('index');
+    let cookieData = JSON.parse(req.cookies.userdata);
+    res.render('index', {user: cookieData});
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.post('/login', (req, res) => {
+    // process to database
+    let userData = {
+        username: req.body.username,
+        room: req.body.room
+    };
+
+    roomModel.joinRoom(userData, function(err, result) {
+        if(err === null) {
+            res.cookie('userdata', JSON.stringify(userData));
+            res.redirect('/');
+        } else {
+            res.redirect('/login');    
+        } 
+    });
 });
 
 let listener = http.listen(3000, () => {
@@ -33,4 +66,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         socket.in('someroom').broadcast.emit('reply-message', 'someone is disconnected');
     });
+
+    // leave
+    socket.leave('someroom');
 });

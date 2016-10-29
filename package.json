@@ -22,8 +22,11 @@
   },
   "homepage": "https://github.com/froyoframework/realtime-chat-app#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
+    "mysql": "^2.11.1",
     "socket.io": "^1.5.1"
   }
 }
